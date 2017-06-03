@@ -22,11 +22,15 @@ select f_a+1.0 from test;
 desc test;
 
 
+
+
 use employees;
 
+desc employees;
 
+select * from employees where hire_date between '1986-06-26' and '1987-06-26';
 
-
+select * from employees where first_name like '_iche%';
 
 
 

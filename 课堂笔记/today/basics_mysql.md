@@ -6,6 +6,9 @@
 
 #### TL;DR; ####
 
+0. `floats` and `doubles` are necessarily imprecise. Using
+   DECIMAL is usually what you want. (comment from below question)
+
 1. In MySQL, there are exactly *two* floating point datatypes:
 single precision (32-bits) and double precision (64-bits.)
 

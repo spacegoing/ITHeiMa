@@ -1,0 +1,99 @@
+* 3.5 Answer:
+  We noticed that {CN, AN, DA, AB} and {CN, AT, DA, AB} are two keys of R. Therefore, R is not in 3rd normalization form.
+
+  Choosing {CN, AN, DA, AB} as a key. Then R0 = {CN, AN, DA, AB}. 
+
+  1. Finding the minimal cover:
+     Step 1: Make all FDs only have 1 attribute on the right side.
+     (fd1) CN -> CF
+     (fd2) CN -> CL
+     (fd3) CN -> CS
+     (fd4) CN -> CT
+     (fd5) AN -> CL
+     (fd6) AN -> AT
+     (fd7) DA AN AB -> DE
+     (fd8) DA AN AB -> AM
+     (fd9) CN AT -> AN
+     
+     Step 2: Remove redundant attrbitue in FDs:
+     There is no redundant attribute in fd1 to fd9.
+     
+     Step 3: Remove redundant FDs:
+     There is no redundant FDs in fd1 to fd9.
+     
+     Therefore the minimal cover of R is fd1 to fd9.
+     
+  2. R0 = {CN, AN, DA, AB}    R1 = {CN, CF, CL, CS, CT}    R2 = {AN, CL, AT}
+     R3 = {DA, AN, AB, DE, AM}    R4 = {CN, AT, AN}
+
+  3. There is no redundant relations in R0 to R4.
+
+  4. Project FDs on R0 to R4:
+     R0: 
+     Null
+     
+     R1: 
+     fd1: CN -> CF CL CS CT
+     
+     R2: 
+     fd2: AN -> CL
+     fd3: AN -> AT
+     
+      R3: 
+      fd4: DA AN AB -> DE AM
+      
+      R4:
+      fd5: CN AT -> AN
+
+  
+     The determinant CN is not a superkey,  so we need to split the relation schema as follows:
+     X = CN    Y = CF CL CS CT    R = CN CF CL CS CT AN AT AB DA DE AM
+     R1 = R - Y = CN AN AT AB DA DE AM
+     R2 = X U Y = CN CF CL CS CT
+     
+     Functional Dependencies in R1:
+     fd3: AN -> AT
+     fd4: DA AN AB -> DE AM
+     fd5: CN AT -> AN
+     Functional Dependencies in R2:
+     fd1: CN -> CF CL CS CT
+     
+     Therefore, R2 is in BCNF normalization form. However, we lose the fd2: AN -> CL. 
+
+  3. Check fd4 in R1:
+     The determinant DA AN AB is not the superkey so we need to split the relation schema as follows:
+     X = DA AN AB    Y = DE AM    R1 = CN AN AT AB DA DE AM
+     R1 = R1 - Y = CN AN AT AB DA
+     R2 = CN CF CL CS CT
+     R3 = X U Y = DA AN AB DE AM
+     
+     Functional Dependencies in R1:
+     fd3: AN -> AT
+     fd5: CN AT -> AN
+     Functional Dependencies in R2:
+     fd1: CN -> CF CL CS CT
+     Functional Dependencies in R3:     
+     fd4: DA AN AB -> DE AM
+     
+     Therefore, R3 is in BCNF normalization form.
+     
+  4. Check R1: 
+     The determinant AN is not the superkey so we need to split the relation schema as follows:
+     X = AN    Y = AT    R1 = CN AN AT AB DA
+     R1 = R1 - Y = CN AN AB DA
+     R2 = CN CF CL CS CT
+     R3 = DA AN AB DE AM
+     R4 = X U Y  = AN AT
+     
+     Functional Dependencies in R1:
+     Null
+     Functional Dependencies in R2:
+     fd1: CN -> CF CL CS CT
+     Functional Dependencies in R3:     
+     fd4: DA AN AB -> DE AM
+     Functional Dependencies in R4:     
+     fd3: AN -> AT
+     
+     Therefore, R4 is in BCNF normalization form. Since R1 has null FDs, R1 is in BCNF normalization form too.
+
+  5. Till now, all R1 to R4 are in BCNF normalization form. However, only fd1, fd3 and fd4 are preserved. So this is not dependency preserving.

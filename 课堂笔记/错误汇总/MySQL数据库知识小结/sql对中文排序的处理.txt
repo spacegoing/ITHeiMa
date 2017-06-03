@@ -1,0 +1,1 @@
+Select * from stu order by convert(name USING gbk) desc;

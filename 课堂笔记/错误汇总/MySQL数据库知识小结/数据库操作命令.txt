@@ -1,0 +1,155 @@
+插入数据：
+insert 【into】 表名 【(字段名1，字段名2，......)】 values(值表达式1，值表达式2，.......)，(........)，.....;
+可以插入多条同一主键的数据???--不可以，这里的id要求不能设定为主键，否则无法插入；
+replace也可以插入一条数据，如果数据已经存在，则更新原来的数据
+load  date  infile插入数据语法
+删除数据：
+delete from  表名  【where 条件】【order by 排序字段】【limit 限定行数】
+修改数据：
+update 表名 set  字段1=值1，字段2=值2，.......【where 条件】【order by 排序字段】【limit 限定行数】
+其中的数据值如果有字符串或时间值，需要用单引号；
+特别注意 where条件的使用！！！
+
+-------------------------------------------------------------------------------
+客户端cmd(即DOS命令下)操作数据库的常用命令：
+mysql -hlocalhost -uroot -p;  登录mysql数据库；
+set names gbk;  设定当前数据库的环境编码；客户端cmd默认的是gbk编码；
+show databases;  显示所有数据库；
+create database  db1 charset utf8;   创建一个数据库db1  设定字符集utf8；
+drop database db1;  删除数据库db1；
+use db_name;  选择数据库； 
+create table news;  创建一个数据表news；
+show create database db_name  显示数据库的创建语句；
+
+数据库的备份和恢复：
+备份：mysqldump  -h服务器地址 -u登录名 -p  数据库名 > 文件名
+恢复：mysql  -h服务器地址 -u登录名 -p  数据库名 < 文件名
+文件名一般写一个完整的路径，eg：f:/db1.sql
+这两个命令，都是在“没有登录mysql”的时候使用；
+
+php操作mysql数据库基本函数：
+$link = mysql_connent("数据库服务器地址","用户名","密码");
+mysql_query("set names 网页文件编码名");
+mysql_query("use 数据库名"); 也可以这样写：mysql_select_db("数据库名");
+然后，开始正式执行要完成的数据库操作任务：
+$result = mysql_query("select / delete / update / insert / desc / show......");
+对于mysql_query()这个函数，可以执行“几乎任何sql语句“,
+通常只有两种情况：
+情况1：执行没有数据返回的语句：执行结果只有true和false两种情况；
+情况2：执行有数据返回的语句：成功返回“结果集”，失败返回false；
+
+特别注意：
+mysql_query()返回的是资源类型的数据；
+以下的函数都是从‘结果集’中取出数据，即mysql_query语句执行的结果
+mysql_fetch_assoc($result);
+从结果集中取出"一行数据"，以字段下标返回
+mysql_fetch_row($result);
+从结果集中取出"一行数据"，以枚举数组返回
+mysql_fetch_array($result);
+从结果集中取出"一行数据"，并以混合数组形式返回
+$n1 = mysql_num_rows($result);
+获得该结果集的数据行数
+$n2 = mysql_num_fields($result);
+获得该结果集的数据列数
+$name = mysql_field_name($result,$i);
+获得结果集的第 i 个字段的名字！i从0开始算起
+----------------------------------------------------------------------
+索引：
+索引是系统内部自动维护的隐藏的‘数据表’,它的作用是加快数据的读取速度。
+建立索引的形式为： 索引类型（要建立索引的字段名）
+索引类型有如下几个：
+普通索引：形式：key (字段名)
+唯一索引：形式：unique key (字段名)
+主键索引：形式：primary key (字段名)
+全文索引：形式：fulltext (字段名)
+外键索引：形式：foreign key (字段名) references  其它表(对应其它表中的字段名);
+
+约束：就是要求数据满足什么条件的一种“规定”。
+主要有如下几种约束：
+主键约束：形式：primary key (字段名)；
+唯一约束：形式：unique key (字段名)；
+外键约束：形式：foreign key (字段名)  references  其它表名(对应其它表名中的字段名);
+ "XX约束，它们只是同一件事情的不同说法，同时也称为 XX索引"
+
+表选项列表
+表选项就是创建一个表的时候，对该表的整体设定，有如下几个：
+charset = 要使用的字符编码，
+engine = 要使用的存储引擎（也叫表类型），
+auto_increment = 设定当前表的自增长字段的初始值，默认是1
+comment = ‘该表的一些说明文字’
+engine常用的有2种：InnoDB和MyIsam；默认InnoDB
+---------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------
+
+基本查询：
+select【all | distinct】 字段或表达式列表 【from字句】【where 字句】【group by 字句】【having 字句】【order by 字句】【limit 字句】;
+concat( )函数是mysql中的系统函数，用于“连接”字符串
+每个输出项（字符串或表达式）都可以有一个别名 
+形式： XX as 别名；（可以是中文名，不用加引号）
+eg：count (*)  as  数量
+注意，实际上表的字段并没有改变，而只是改变了“结果集”的字段名；
+all 和 distinct
+用于设定select出来的数据，是否消除“重复性”，默认值all（显示所有）；
+distinct 消除重复的行，将多行重复的数据显示为1行
+from 字句
+表示select部分从中“取得”数据的数据源--其实就是表
+通常，后面就是表名。
+where 字句
+就是对from子句中的“数据源”中的数据进行筛选的条件设定，
+筛选的机制是“一行一行进行判断”；
+is 运算符：空值和布尔值的判断
+XX is null
+XX is not null
+XX is true
+XX is false
+between运算符：范围判断
+XX between 值1 and 值2；
+其实相当于：  XX >=值1  and  XX <= 值2；
+in运算符：给定确定数据的范围判断
+XX in (值1，值2，值3，......)
+like运算符：对字符串进行模糊查找
+XX like‘要查找的内容’
+它依赖与一下两个字符 % 和 _   ( _ 表示一个任意的字符)
+ '%联想%'   找出表中‘联想’这一行的所有数据行
+ '联想%'    找出以'联想'开头的这一行的所有数据行
+group by 字句：分组
+group by 字段1【desc/asc】，字段2【desc/asc】，........
+什么叫做分组？
+分组就是将多行数据，以某种标准（就是指定的字段）来进行“分类”存放
+特别注意：分组之后的结果，一定要理解为：只有一个一个组了
+则结果是：在select语句中的“输出（取出）”部分，只应该出现“组的信息”：
+select  组信息1， 组信息2， .....  from  数据源   group  by  字段；
+实际应用中，分组之后：
+1、分组依据本身的信息，其实就是该分组依据的字段名；
+2、每一组的“数量”信息：就是用count（*）获得；这个也是内部系统函数！
+3、原来数据中的“类型字段的聚合信息”，包括如下几个：
+     最大值：max(字段名)   原始形式为  max()
+     最小值：min(字段名)    原始形式为  min()
+     平均值：avg(字段名)    原始形式为  avg()
+     总和值：sum(字段名)   原始形式为  sum()
+这4个是内部系统函数！！！
+select pinpai, count(*) as 数量 from product group by pinpai;
+表示每一种品牌的商品数量
+select pinpai, count(*) as 数量, max(price) as 最高价,min(price) as 最低价,avg(price) as 平均价,sum(price) as 总价, chandi  from product group by pinpai
+chandi?????  //只在mysql中生效
+having 子句
+和where作用一样，由于分组之后限定了范围，可用条件语句比较少
+select pinpai, count(*) as 数量, max(price) as 最高价,min(price) as 最低价,avg(price) as 平均价,sum(price) as 总价, chandi  from product group by pinpai having 平均价 > 5000
+找出平均价大于5000的商品
+having  count(*) > 2
+此时count(*)是独立计算的结果(与select上面那条语句没有关系)：
+order by 字句
+对前面取得的数据以设定的标准（字段）来进行排序以输出结果。
+order by  字段1【desc/asc】，字段2【desc/asc】，........
+(asc，默认值)
+limit 起始行号  
+/*找出价格最高的一件商品*/
+select * from product order by desc limit 0, 1
+将商品按降序排列，取出一行
+select字段依赖于from????? 
+这是由于要查找的字段是从from中的表中读取(表中必须包含这些字段)
+完整的select查询语句结构：
+select * from product [where ...] order by  protype_id, price desc  [having ...]  limit 2,2
+

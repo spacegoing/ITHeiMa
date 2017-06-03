@@ -1,0 +1,2 @@
+Data truncated for column 'Prices' at row 1怎么解决？
+这句话的意思是第一行数据的Prices列的数据被截断，应该是你的数据长度过长，检查下你数据库表中Prices的数据类型和精度，如果第一行的数据超过了表中的设置，就会出现这种情况，比较好的办法是把表中Prices的数据长度改长点 

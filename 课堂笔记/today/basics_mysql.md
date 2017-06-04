@@ -159,9 +159,6 @@ In General, Database and table names are **not case sensitive** in
 `Windows`, and **case sensitive** in most varieties of `Unix`.
 
 
-
-
-
 ### Apache ###
 
 - `ServerName` 与 `ServerAlias` 作用

@@ -1,5 +1,11 @@
 # SQL Lang #
 
+## Select Clause Syntax ##
+The order of the clauses in the `SELECT` statement is
+significant. Any one of the optional clauses can be omitted, but
+when the **optional clauses are used**, they **must** appear
+in the appropriate order.
+
 ## Query Execution Order ##
 
 SQL has no order of execution. Is a declarative language. The
@@ -9,6 +15,8 @@ produce the best execution time.
 [Actually there is this: Logical Processing Order of the SELECT
 statement.]
 (https://stackoverflow.com/questions/4596467/order-of-execution-of-the-sql-query)
+
+[Microsoft](https://docs.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql)
 
 > The following steps show the logical processing order, or binding
 > order, for a SELECT statement. This order determines when the
@@ -35,6 +43,27 @@ statement.]
 > 1. DISTINCT
 > 1. ORDER BY
 > 1. TOP
+
+
+
+## Subqueries ##
+
+### Where Clause ###
+
+#### Multi-conditions ####
+
+- `select * from student where (age,score)=(select
+  min(age),max(score) from student);`
+- **Equivalence:** `select * from student where age=(select
+  min(age) from student) 
+  and score=(select max(score) from student);`
+
+
+
+
+
+
+
 
 ## JOIN Operation ##
 
@@ -77,6 +106,10 @@ statement.]
 
 
 ## 问题 ##
+
+- subqueries 都能用在哪里？
+
+
 
 ### SQL 的输入输出是什么？ ###
 

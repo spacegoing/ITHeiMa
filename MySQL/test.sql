@@ -51,7 +51,24 @@ select * from OrderItems;
 select * from Products;
 select * from Vendors;
 
+select * from Orders;
 
+select * from Customers;
+
+select * from Orders o1, Orders o2 where o1.order_num = 1;
+
+
+
+select cust_name,cust_state,(select count(*)
+from Orders
+where Orders.cust_id = Customers.cust_id) as orders
+from Customers order by cust_name;
+
+select cust_name,cust_state,count(*) as orders
+from Orders o left join Customers c
+on o.cust_id=c.cust_id group by o.cust_id;
+
+select count(cust_name) as orders from Customers where cust_id=102;
 
 show collation;
 

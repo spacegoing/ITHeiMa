@@ -151,11 +151,16 @@ Basically, we changed `REFERENCED_TABLE_NAME` with
 `REFERENCED_COLUMN_NAME` in the where clause.
 
 
-## 问题 ##
+## MISC ##
 
-- float: 范围是3.4e38
-- 有效位数是 6
-- 有效位数是显示的还是存储的
+### Case Sensitivity ###
+
+In General, Database and table names are **not case sensitive** in
+`Windows`, and **case sensitive** in most varieties of `Unix`.
+
+
+
+
 
 ### Apache ###
 

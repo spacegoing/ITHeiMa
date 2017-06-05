@@ -104,6 +104,11 @@ statement.]
 
 - `avg()` 会忽略 null 值
 
+### Functions ###
+
+- `select timestampdiff(year,'1975-01-01',curdate());`
+- `curdate()` 返回当前日期
+- `timestampdiff([SECOND|MINUTE|HOUR|DAY|WEEK|MONTH|QUARTER|YEAR])`
 
 ## 问题 ##
 

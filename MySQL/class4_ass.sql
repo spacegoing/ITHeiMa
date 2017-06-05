@@ -1,4 +1,5 @@
 create database lichang;
+
 use lichang;
 
 create table employee (
@@ -50,15 +51,49 @@ update salary set basesalary=1700, titlesalary=600 where empid=
 delete from department where depname='人事部';
 
 #7
+select s.empid, (basesalary+titlesalary-deduction) as '实发工资',
+(titlesalary+basesalary) as '应发工资' from employee e inner join salary s
+on e.empid=s.empid;
+
+#8
+select * from employee where name like '张%' and timestampdiff(year,birthday,curdate())<50;
+
+#9
 select s.empid, name, (basesalary+titlesalary-deduction) as '实发工资',
 (titlesalary+basesalary) as '应发工资' from employee e inner join salary s
 on e.empid=s.empid;
 
+#10
+select e.empid, name, title, depname, (basesalary+titlesalary-deduction) as '实发工资' from employee e inner join salary s on e.empid=s.empid
+inner join department as d on e.depid=d.depid;
 
+#11
+select name, basesalary
+from employee e inner join department d on e.depid = d.depid
+inner join salary s on e.empid=s.empid
+where depname='销售部';
 
+#12
+select title, count(*) as '人数' from employee group by title;
 
+#13
+select depname, sum(basesalary+titlesalary-deduction) as sum,
+avg(basesalary+titlesalary) as avg
+from employee e inner join salary s on e.empid=s.empid
+inner join department d on d.depid=e.depid
+group by d.depid;
 
-
+#14
+select name from employee e inner join department d
+on e.depid=d.depid
+inner join salary s
+on e.empid=s.empid
+where s.basesalary>
+(select max(basesalary) from employee e inner join department d
+on e.depid=d.depid
+inner join salary s
+on e.empid=s.empid
+where d.depname='销售部');
 
 
 drop database lichang;

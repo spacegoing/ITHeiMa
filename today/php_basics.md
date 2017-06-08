@@ -37,6 +37,94 @@
    径)`
 
 
+### 类型转换 ###
+
+- `0 0.0 ‘0’ null ‘’ array()` 会被转化为 `FALSE`，其余都是`True`
+
+  ``` php
+      $mime_info = finfo_open(FILEINFO_MIME_TYPE);
+      var_dump($mime_info);
+      var_dump('1'.TRUE);
+  ```
+- 可以组合 `is_*()` 判断函数进行类型判断
+
+
+#### 检查字符串是否为整数 ####
+
+##### 用正则表达式最靠谱 #####
+
+##### 只能用于 string, 用于 int 则判断为 false #####
+How about using [`ctype_digit`](http://php.net/ctype_digit)?
+
+From the manual:
+
+    <?php
+    $strings = array('1820.20', '10002', 'wsl!12');
+    foreach ($strings as $testcase) {
+        if (ctype_digit($testcase)) {
+            echo "The string $testcase consists of all digits.\n";
+        } else {
+            echo "The string $testcase does not consist of all digits.\n";
+        }
+    }
+    ?>
+
+The above example will output:
+
+<pre>
+The string 1820.20 does not consist of all digits.
+The string 10002 consists of all digits.
+The string wsl!12 does not consist of all digits.
+</pre>
+
+This will only work if your input is always a string:
+
+    $numeric_string = '42';
+    $integer        = 42;
+    
+    ctype_digit($numeric_string);  // true
+    ctype_digit($integer);         // false
+
+If your input might be of type `int`, then combine `ctype_digit` with [`is_int`](http://php.net/manual/en/function.is-int.php).
+
+If you care about negative numbers, then you'll need to check the input for a preceding `-`, and if so, call `ctype_digit` on a [`substr`](http://php.net/substr) of the input string. Something like this would do it:
+
+    function my_is_int($input) {
+      if ($input[0] == '-') {
+        return ctype_digit(substr($input, 1));
+      }
+      return ctype_digit($input);
+    }
+
+
+##### 当输入为 int / float 但小数位0 时，仍输出整数部分 #####
+
+[`filter_var`][1] should do it:
+
+    var_dump(filter_var('2', FILTER_VALIDATE_INT));   // 2
+    var_dump(filter_var('2.0', FILTER_VALIDATE_INT)); // false
+    var_dump(filter_var('2.1', FILTER_VALIDATE_INT)); // false
+
+but
+
+    // !!! Exception !!!
+    var_dump(filter_var(2, FILTER_VALIDATE_INT));     // 2
+    // !!! Exception !!!
+    var_dump(filter_var(2.0, FILTER_VALIDATE_INT));   // 2
+    var_dump(filter_var(2.1, FILTER_VALIDATE_INT));   // false
+
+If you just want Booleans as return values, wrap it into a function, e.g.
+
+    function validatesAsInt($number)
+    {
+        $number = filter_var($number, FILTER_VALIDATE_INT);
+        return ($number !== FALSE);
+    }
+
+  [1]: http://de.php.net/manual/en/ref.filter.php
+
+
+
 
 ## Best Practices##
 

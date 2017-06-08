@@ -21,6 +21,17 @@
 
 - `value` 可以是中文，但是是中文时，一定要用 `""` wrap
 
+## Labels ##
+
+- `<img>` 如果文字与图片在一行，则 图片 底线 与 文字 基线 对齐
+
+
+
+
+
+
+
+
 
 ## Selectors ##
 
@@ -42,6 +53,11 @@
 
 - `text-align: center;`
 
+### 垂直居中 ###
+
+#### 内容居中 ####
+
+- `line-height= element height` 让行高=元素高度
 
 
 
@@ -64,6 +80,36 @@
 1. `a`标签不能继承颜色，如果一定要修改a标签的颜色直接作用在a标签上面。
 2. `h`标签不能继承大小，如果一定要修改h标签的大小直接作用在h标签上面。
 3. `<div>` 高度由内容决定，默认为0；宽度默认占一整行。
+
+
+### 特殊情况 按属性分类 ###
+
+#### line-height 与 font-size ####
+
+- `line-height` 默认等于 `font-size`
+- 如果先设置`line-height`，再用`font: ;` 设置，`font`的**默认值**
+  会覆盖`line-height`
+
+
+
+
+#### div 嵌套下 行高的继承 ####
+
+1. 在设置行高的时候，如果父元素单位是`em`或者`%`，那么将来行高会
+   先计算父元素结果以后再继承给子元素。`.father[line-height:2em]`
+   `son` 的 `line-height=40px`。但如果 `.son` 制定了
+   `line-height`，则使用`.son`的。
+
+2. 在设置行高的时候，如果单位是没有，那么将来父元素行高会先继承给
+   子元素，然后再结合子元素 `font-size` 计算子元素行
+   高。`.father[line-height:2]` `son` 的 `line-height=30px`
+
+
+
+
+
+
+
 
 
 
@@ -155,6 +201,15 @@ calculated separately.
 
 选择器在查找元素的时候不是从左往右找，而是从右往左找。
 
+
+
+
+
+## Element 用法 ##
+
+### Table ###
+
+- `border-collapse:collapse` 去掉单元格之间的间隙
 
 
 

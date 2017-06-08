@@ -73,14 +73,33 @@ select count(cust_name) as orders from Customers where cust_id=102;
 show collation;
 
 
+create database question;
+
+use question;
+
+create table shopping(
+id int primary key auto_increment,
+name varchar(10),
+price mediumint,
+departmentId tinyint) engine='innodb' charset=utf8;
+insert into shopping values
+(1,'Joe  ', 70000, 1),
+(2,'Henry', 80000, 2),
+(3,'Sam  ', 60000, 2),
+(4,'Max  ', 90000, 1),
+(5,'Janet', 69000, 1),
+(6,'Randy', 85000, 1);
 
 
 
+SELECT b.*, a.*
+from shopping as a,shopping as b
+where a.price<b.price
+order by b.id;
 
 
 
-
-
+drop table shopping;
 
 
 

@@ -49,6 +49,24 @@ select depart_name from col where id=(select depart_id from
 group by depart_id
 order by num desc limit 1) as mid);
 
+#有多个最高值怎么办
+
+select * from stu where depart_id=(
+select depart_id from 
+)
+
+select depart_id from (select count(*) as cc,depart_id from stu group by depart_id) as count_dep where cc=max(cc);
+
+select count_dep.depart_id from
+count_dep
+where count_dep.cc=
+(select max(cc) as mc from(select count(*) as cc, depart_id from stu group by depart_id));
+
+
+
+show tables;
+desc stu_info;
+
 #6
 select count(*) as num,sex from stu where depart_id=
 (select depart_id from

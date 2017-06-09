@@ -166,9 +166,9 @@ In General, Database and table names are **not case sensitive** in
 - `a2ensite example.com.conf` 使configure 文件生效，`a2ensite` 作用？
 
 
+### Usage ###
 
-
-
+- `default` 可以直接用在 `values()` 子句中，调用默认值
 
 
 

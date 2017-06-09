@@ -8,15 +8,29 @@
 - `die;`?
 - unique key?
 - 如何在一个form中多个 `evtype`?
+- `extension_dir`
+- `mysqli([])` 没有错误信息? 何时有错误信息？
+- 如何选择重复标签
+- templating engine
+- 16\17 非法的参数
+- 多个 `header()` 多个 文件 发送多次?
 
 ### 已解决 ###
 
 - `8M`: 上传文件不可超过 `php.ini`定义的 `post_max_size = 8M` 否
   则php `$_FILES` 得到的为空 `array()` 没有错误信息
+- `require_once` 会执行导入文件中所有代码，污染当前命名空间
+- `-> > .` php 不报错: `php.ini` 中 `display_error=On`
 
 ## Keng ##
 
 ### 文件上传 ###
+
+#### HTML form 设计 ####
+
+- `<form action="./test.php" method="POST"
+  enctype="multipart/form-data">`
+- `<input type="file" name="up_file">`
 
 
 #### 当文件大于8M时没有报错 ####
@@ -190,11 +204,12 @@ var_dump($title, $author);
 
 
 
+## is * ? ##
 
+### isset v.s. empty ###
 
-
-
-
+- `isset` 判断是否设置
+- `empty` 判断是否为空
 
 
 

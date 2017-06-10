@@ -4,16 +4,9 @@
 
 ### 未解决 ###
 
-- `数组格式 []` php 专用？
-- `die;`?
-- unique key?
-- 如何在一个form中多个 `evtype`?
-- `extension_dir`
+- `extension_dir` ini 中找不到 2010....
 - `mysqli([])` 没有错误信息? 何时有错误信息？
-- 如何选择重复标签
-- templating engine
-- 16\17 非法的参数
-- 多个 `header()` 多个 文件 发送多次?
+- file_put_content block 还是 整个？
 
 ### 已解决 ###
 
@@ -21,6 +14,25 @@
   则php `$_FILES` 得到的为空 `array()` 没有错误信息
 - `require_once` 会执行导入文件中所有代码，污染当前命名空间
 - `-> > .` php 不报错: `php.ini` 中 `display_error=On`
+- `数组格式 []` php 专用？
+- unique key?
+- 如何选择重复标签
+- templating engine MVC
+- 如何在一个form中多个 `evtype`? 不能，但是不需要
+- 16\17 非法的参数 框架（如 thinkphp I 函数）
+- 如何将 HTML 中代码放入 PHP / 其它语言 (method="POST") 混编（框
+  架？）
+- 如何知道磁盘是 GBK ? (Windows 历史问题，别的系统需要再查)
+- 抓包干吗用？ (cookie, session)
+
+- 多个 `header()` 多个 文件 发送多次?
+
+  ``` php
+    header('Content-Type: text/html; charset=utf-8');
+    header('HaHa: shhhhhhhhhhhhhhhhhhhhhhit);
+  ```
+  后面的覆盖前面的，没声明的会merge
+
 
 ## Keng ##
 
@@ -199,6 +211,16 @@ var_dump($title, $author);
 
 - `mt_rand` 效率是 `rand` 4倍
 
+### 获取当前文件夹下所有文件（包括文件夹） ###
+
+You are looking for the command [scandir](http://php.net/manual/en/function.scandir.php).
+
+    $path    = '/tmp';
+    $files = scandir($path);
+    
+Following code will remove `.` and `..` from the returned array from `scandir`:
+
+    $files = array_diff(scandir($path), array('.', '..'));
 
 
 

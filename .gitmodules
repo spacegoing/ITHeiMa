@@ -1,0 +1,3 @@
+[submodule "my_first_php"]
+	path = my_first_php
+	url = git@github.com:spacegoing/my_first_php.git

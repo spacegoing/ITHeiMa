@@ -5,3 +5,6 @@
 *.pdf
 *.chm
 /PHP
+*.zip
+ueditor/
+ThinkPHP/

@@ -7,6 +7,10 @@
 - `extension_dir` ini 中找不到 2010....
 - `mysqli([])` 没有错误信息? 何时有错误信息？
 - file_put_content block 还是 整个？
+- 一键对齐 sublime
+- fpm zts nts
+- session path ? conf 中没有
+- 如何使用cookie?
 
 ### 已解决 ###
 
@@ -25,6 +29,11 @@
 - 如何知道磁盘是 GBK ? (Windows 历史问题，别的系统需要再查)
 - 抓包干吗用？ (cookie, session)
 
+- 浏览器关闭没有身份信息: 浏览器自动删除？
+- GC概率，触发扫描概率，即使过期，也按照概率选择一定比例的过期文
+  件删除
+- 一个 cookie 多个 name? 多次调用 `setcookie()`
+
 - 多个 `header()` 多个 文件 发送多次?
 
   ``` php
@@ -32,7 +41,7 @@
     header('HaHa: shhhhhhhhhhhhhhhhhhhhhhit);
   ```
   后面的覆盖前面的，没声明的会merge
-
+- $SID 常量，当前session id
 
 ## Keng ##
 
@@ -152,7 +161,7 @@ If you just want Booleans as return values, wrap it into a function, e.g.
 
 
 
-## Best Practices##
+## Best Practices ##
 
 ### 获取文件扩展名 ###
 

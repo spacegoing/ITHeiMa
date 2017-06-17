@@ -11,6 +11,9 @@
 - fpm zts nts
 - session path ? conf 中没有
 - 如何使用cookie?
+- pecl
+- php7 vs php5
+- php编程规范
 
 ### 已解决 ###
 
@@ -158,8 +161,35 @@ If you just want Booleans as return values, wrap it into a function, e.g.
 
   [1]: http://de.php.net/manual/en/ref.filter.php
 
+### Session  ###
 
+- 生命周期：默认适用于全站，每个浏览器一个session，生命周期默认24
+  分钟。
+  1. session的持有者(即客户端浏览器)在最大无活动等待时间
+    (MaxInactiveInterval)内无任何响应或请求
+  2. session被调用invalidate()方法强制弊了
+  3. jsp服务器重起或发生中断(此时应该是所有session都当了)
 
+  用户关闭浏览器后标志着
+
+  1. session将不再发送请求到服务器
+  2. 该session将不会有人调用他的invalidate()方法。所以，此时只能
+     等待session自己超时死亡，如果设置了该session的
+     `MaxInactiveInterval`为-1,那么这个session只有在第3种情况下才
+     能死了.
+
+#### Usages ####
+
+1. `session_start()` must be at the top of your source, no html or
+   other output befor!
+1. your can only send `session_start()` one time
+1. by this way `if(session_status()!=PHP_SESSION_ACTIVE) session_start()`
+  
+``` php
+ if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+    }
+```
 
 ## Best Practices ##
 
@@ -234,6 +264,17 @@ Following code will remove `.` and `..` from the returned array from `scandir`:
 
 
 
+
+### 处理中文字符串（数组） ###
+
+- `preg_match_all` Perform a global regular expression match
+
+``` php
+    $str = "hi钓鱼岛是中国的";  
+    preg_match_all("/./u", $str, $arr);  
+    print_r($arr[0]);  
+    //by www.jbxue.com  
+```
 
 ## is * ? ##
 
